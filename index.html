@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bhumiiiii 🧸 | Teddy Day Scrapbook</title>
+  <meta name="description" content="A cute romantic Teddy Day scrapbook theme using your childhood photo." />
+  <style>
+    :root{
+      --bg:#0b0a10;
+      --paper:#fff7ef;
+      --ink:#1c1a22;
+      --muted:#4d485a;
+      --rose:#ff4da6;
+      --gold:#ffcc66;
+      --violet:#7c5cff;
+      --shadow: 0 28px 90px rgba(0,0,0,.45);
+      --r: 22px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1200px 700px at 15% 15%, rgba(255,77,166,.18), transparent 60%),
+        radial-gradient(900px 650px at 85% 20%, rgba(124,92,255,.16), transparent 60%),
+        radial-gradient(900px 650px at 50% 95%, rgba(255,204,102,.12), transparent 60%),
+        linear-gradient(180deg, #07070c, #0b0a10);
+      color:#fff;
+      overflow-x:hidden;
+    }
+
+    /* cute stickers */
+    .float{ position:fixed; inset:0; pointer-events:none; z-index:9999;
+      opacity:.9;
+    }
+    .st{ position:fixed;
+      font-size: 22px;
+      filter: drop-shadow(0 14px 18px rgba(0,0,0,.35));
+      animation: drift linear infinite;
+      opacity:.75;
+    }
+    @keyframes drift{
+      0%{ transform: translateY(0) rotate(-10deg); opacity:0; }
+      10%{ opacity:.75; }
+      100%{ transform: translateY(-140vh) rotate(18deg); opacity:0; }
+    }
+      10%{ opacity:.75; }
+      100%{ transform: translateY(-25vh) rotate(18deg); opacity:0; }
+    }
+
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width:1080px;
+      margin:0 auto;
+      padding: 22px 16px 70px;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding: 12px 6px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      user-select:none;
+    }
+    .badge{
+      width:46px;height:46px;
+      border-radius:18px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg, rgba(255,77,166,.95), rgba(255,204,102,.90));
+      box-shadow: 0 20px 70px rgba(255,77,166,.12);
+      font-size:22px;
+    }
+    .brand b{ font-size:15px; letter-spacing:.2px; }
+    .brand small{ display:block; opacity:.78; margin-top:2px; }
+    .name{
+      background: linear-gradient(90deg, var(--gold), var(--rose), var(--violet));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-weight:900;
+    }
+
+    .chip{
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      font-size:13px;
+      opacity:.9;
+      white-space:nowrap;
+    }
+
+    /* scrapbook */
+    .paper{
+      margin-top: 10px;
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .top{
+      padding: 20px 18px 14px;
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 16px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .top{ grid-template-columns:1fr; }
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(30px, 4vw, 48px);
+      letter-spacing:-.9px;
+      line-height:1.05;
+    }
+    .sub{
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height:1.7;
+      font-size: 15.5px;
+      max-width: 62ch;
+    }
+
+    .btns{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top: 16px;
+    }
+    .btn{
+      border:0;
+      cursor:pointer;
+      border-radius: 18px;
+      padding: 12px 14px;
+      font-weight:900;
+      font-size: 14px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+    .primary{
+      background: linear-gradient(90deg, rgba(255,77,166,.95), rgba(124,92,255,.88));
+      color:white;
+      box-shadow: 0 18px 55px rgba(255,77,166,.12);
+    }
+    .soft{
+      background: rgba(0,0,0,.05);
+      border: 1px solid rgba(0,0,0,.10);
+      color: rgba(0,0,0,.78);
+    }
+
+    /* photo polaroid */
+    .polaroid{
+      background: #fff;
+      border-radius: 22px;
+      padding: 12px 12px 16px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.18);
+      border: 1px solid rgba(0,0,0,.08);
+      transform: rotate(1.5deg);
+      position:relative;
+      overflow:hidden;
+    }
+    .polaroid:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(500px 220px at 10% 0%, rgba(255,77,166,.10), transparent 60%),
+                  radial-gradient(500px 240px at 90% 20%, rgba(124,92,255,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .polaroid img{
+      width:100%;
+      height: 360px;
+      object-fit: cover;
+      border-radius: 18px;
+      display:block;
+    }
+    @media (max-width: 980px){
+      .polaroid img{ height: 320px; }
+    }
+    .caption{
+      margin-top: 10px;
+      font-weight:800;
+      letter-spacing:.2px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .caption span{ opacity:.78; font-weight:700; }
+
+    /* tape corners */
+    .tape{
+      position:absolute;
+      width: 110px; height: 34px;
+      background: rgba(255,211,106,.45);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 12px;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,.10));
+    }
+    .t1{ top: 12px; left: 10px; transform: rotate(-14deg); }
+    .t2{ top: 12px; right: 10px; transform: rotate(14deg); }
+
+    /* tiles */
+    .tiles{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      padding: 0 18px 18px;
+    }
+    @media (max-width: 980px){
+      .tiles{ grid-template-columns:1fr; }
+    }
+    .tile{
+      background: rgba(0,0,0,.03);
+      border: 1px dashed rgba(0,0,0,.18);
+      border-radius: 22px;
+      padding: 16px 16px 14px;
+    }
+    .tile h3{
+      margin:0 0 8px;
+      font-size: 17px;
+      letter-spacing:-.2px;
+    }
+    .tile p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.6;
+      font-size: 14px;
+    }
+
+    .msg{
+      margin: 0 18px 18px;
+      background: rgba(0,0,0,.03);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 22px;
+      padding: 16px;
+    }
+    .msg h2{
+      margin:0 0 10px;
+      font-size: 18px;
+      letter-spacing:-.2px;
+    }
+    .msg p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.75;
+      font-size: 15px;
+    }
+
+    .footer{
+      margin-top: 16px;
+      text-align:center;
+      opacity:.75;
+      font-size: 13px;
+    }
+
+    /* modal */
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      place-items:center;
+      padding: 18px;
+      z-index:50;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(8px);
+    }
+    .modal.open{ display:grid; }
+    .modal-card{
+      width:min(900px, 100%);
+      border-radius: 28px;
+      background: #fff;
+      color: #1b1a20;
+      overflow:hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,.55);
+    }
+    .modal-top{
+      padding: 14px 14px 10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+    }
+    .x{
+      width:42px;height:42px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.05);
+      border: 1px solid rgba(0,0,0,.08);
+      display:grid; place-items:center;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modal-body{
+      padding: 14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 860px){
+      .modal-body{ grid-template-columns:1fr; }
+    }
+    .note{
+      border-radius: 22px;
+      border: 1px dashed rgba(0,0,0,.18);
+      background: rgba(255,77,166,.06);
+      padding: 14px;
+      min-height: 150px;
+    }
+    .note h4{
+      margin:0 0 8px;
+      font-size: 16px;
+      letter-spacing:-.2px;
+    }
+    .note p{
+      margin:0;
+      color: rgba(0,0,0,.72);
+      line-height:1.6;
+      font-size: 14.5px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="float" id="float" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="badge">📒</div>
+        <div>
+          <b>Teddy Day Scrapbook</b>
+          <small>For <span class="name">Bhumiiiii</span> • from Pratham</small>
+        </div>
+      </div>
+      <div class="chip">📸 Photo + Scrapbook Theme</div>
+    </header>
+
+    <section class="paper">
+      <div class="top">
+        <div>
+          <h1>
+            Bhumiiiii,<br>
+            <span class="name">Happy Teddy Day</span> 🧸❤️
+          </h1>
+
+          <p class="sub">
+            This is not just a Teddy Day website…
+            It’s a cute little Teddy Day page made only for you.
+            <br><br>
+            And this photo? It’s just my way of saying:
+            <b>I love seeing us together</b> — in every version. 🧸💗
+          </p>
+
+          <div class="btns">
+            <button class="btn primary" id="openBtn">Open Teddy Note ✨</button>
+            <button class="btn soft" id="stickerBtn">Add Cute Stickers 🥰</button>
+            <a class="btn soft" href="#message" style="text-decoration:none">Read My Message 💌</a>
+          </div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape t1"></div>
+          <div class="tape t2"></div>
+          <img src="childhood-together.jpg" alt="Childhood photo together" />
+          <div class="caption">
+            <div>Our first “us” 🥺</div>
+            <span>Forever energy ✨</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tiles">
+        <div class="tile">
+          <h3>🧸 Teddy = comfort</h3>
+          <p>
+            So consider this scrapbook as a comfort page — made only for you.
+          </p>
+        </div>
+        <div class="tile">
+          <h3>💗 You = peace</h3>
+          <p>
+            You make my mind calmer and my heart softer. Always.
+          </p>
+        </div>
+        <div class="tile">
+          <h3>✨ Us = special</h3>
+          <p>
+            This photo is just a cute reminder that you matter to me. 🫶
+          </p>
+        </div>
+      </div>
+
+      <div class="msg" id="message">
+        <h2>💌 My Teddy Day message</h2>
+        <p>
+          Hey <b class="name">Bhumiiiii</b>,<br><br>
+          If Teddy Day is about giving a teddy… then I want to give you something better:
+          <b>my comfort</b>. My care. And my presence in your life.<br><br>
+          This photo is my favorite vibe — because it feels cute, warm, and so us.<br><br>
+          And today, I just want you to know:
+          I’m proud of you. I’m grateful for you.
+          And I’ll always want to see you smiling. 🧸❤️
+        </p>
+      </div>
+    </section>
+
+    <div class="footer">
+      Made for Bhumiiiii 📒🧸 • Happy Teddy Day ❤️
+    </div>
+  </div>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-top">
+        <b>🧸 Teddy Note for Bhumiiiii</b>
+        <div class="x" id="closeBtn">✕</div>
+      </div>
+      <div class="modal-body">
+        <div class="note">
+          <h4>🧸 Cute line</h4>
+          <p id="note1"></p>
+        </div>
+        <div class="note">
+          <h4>❤️ Romantic line</h4>
+          <p id="note2"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // floating stickers
+    const float = document.getElementById("float");
+    const stickers = ["🧸","💗","✨","🥰","🌸","💌","🍫","🫶","🌙"];
+
+    function spawn(){
+      const s = document.createElement("div");
+      s.className="st";
+        s.style.position = "fixed";
+      s.textContent = stickers[Math.floor(Math.random()*stickers.length)];
+      s.style.left = (Math.random()*100)+"vw";
+      s.style.top = (110 + Math.random()*20) + "vh";
+      s.style.animationDuration = (7 + Math.random()*8) + "s";
+      s.style.animationDelay = (-Math.random()*6) + "s";
+      s.style.fontSize = (18 + Math.random()*16) + "px";
+      float.appendChild(s);
+      setTimeout(()=>s.remove(), 15000);
+    }
+    for(let i=0;i<14;i++) spawn();
+    setInterval(spawn, 850);
+
+    // sticker burst
+    function burst(){
+      for(let i=0;i<30;i++){
+        const s = document.createElement("div");
+        s.className="st";
+        s.style.position = "fixed";
+        s.textContent = stickers[Math.floor(Math.random()*stickers.length)];
+        s.style.left = (10 + Math.random()*80)+"vw";
+        s.style.top = (15 + Math.random()*55)+"vh";
+        s.style.animationName = "pop";
+        s.style.animationDuration = (1.1 + Math.random()*1.4) + "s";
+        s.style.opacity = ".95";
+        s.style.fontSize = (18 + Math.random()*18) + "px";
+        float.appendChild(s);
+        setTimeout(()=>s.remove(), 2500);
+      }
+    }
+
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes pop{
+        0%{ transform: translateY(0) rotate(0deg) scale(.7); opacity:0; }
+        15%{ opacity:.95; }
+        100%{ transform: translateY(-60vh) rotate(18deg) scale(1.1); opacity:0; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    document.getElementById("stickerBtn").addEventListener("click", ()=>{
+      const btn = document.getElementById("stickerBtn");
+      const old = btn.textContent;
+      btn.textContent = "Stickers Added ✨";
+      setTimeout(()=>btn.textContent = old, 900);
+      burst();
+    });
+
+    // Modal
+    const modal = document.getElementById("modal");
+    const openBtn = document.getElementById("openBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const note1 = document.getElementById("note1");
+    const note2 = document.getElementById("note2");
+
+    const cuteLines = [
+      "If I could, I’d gift you a teddy that hugs you whenever you miss me. 🧸",
+      "This teddy is basically my feelings in soft form. 💗",
+      "A teddy is a hug you can keep… so keep mine. 🤍",
+      "You’re my cutest thought. Every single day. ✨"
+    ];
+    const romanticLines = [
+      "I don’t want perfect… I want you happy. And I’ll always care. ❤️",
+      "You feel like home to my heart. Calm, safe, and special. 🫶",
+      "I like you in a way that feels cute… and a little serious too. 💞",
+      "Even when I’m busy, a part of me is still thinking about you. 🌙"
+    ];
+    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    function openModal(){
+      note1.textContent = pick(cuteLines);
+      note2.textContent = pick(romanticLines);
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden","false");
+      burst();
+    }
+    function closeModal(){
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden","true");
+    }
+    openBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e)=>{ if(e.target === modal) closeModal(); });
+
+    window.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape") closeModal();
+    });
+  </script>
+</body>
+</html>
