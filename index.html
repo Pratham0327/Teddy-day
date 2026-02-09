@@ -334,9 +334,35 @@
       font-size: 14.5px;
       white-space: pre-wrap;
     }
+  
+    .musicBtn{
+      border:0;
+      cursor:pointer;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:900;
+      font-size:13px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.92);
+      user-select:none;
+      transition: transform .12s ease, filter .12s ease;
+      white-space:nowrap;
+    }
+    .musicBtn:active{ transform: translateY(1px) scale(.99); }
+    .musicBtn:hover{ filter: brightness(1.06); }
+
   </style>
 </head>
 <body>
+
+  <!-- Background instrumental music (starts on first tap due to browser rules) -->
+  <audio id="bgMusic" preload="auto" loop>
+    <!-- Put your mp3 file in the SAME folder and rename it to: romantic.mp3 -->
+    <source src="romantic.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="float" id="float" aria-hidden="true"></div>
 
   <div class="wrap">
@@ -348,7 +374,7 @@
           <small>For <span class="name">Bhumiiiii</span> • from Pratham</small>
         </div>
       </div>
-      <div class="chip">📸 Photo + Scrapbook Theme</div>
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;"><div class="chip">📸 Photo + Scrapbook Theme</div><button class="musicBtn" id="musicBtn">🔊 Music: Off</button></div>
     </header>
 
     <section class="paper">
@@ -540,6 +566,49 @@
     window.addEventListener("keydown", (e)=>{
       if(e.key === "Escape") closeModal();
     });
+  
+    // ---- Background music (auto starts on first tap) ----
+    const bgMusic = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
+    let musicOn = false;
+
+    async function startMusic(){
+      if(!bgMusic) return;
+      try{
+        bgMusic.volume = 0.65; // soft instrumental
+        await bgMusic.play();
+        musicOn = true;
+        if(musicBtn) musicBtn.textContent = "🔈 Music: On";
+      }catch(e){
+        // autoplay blocked until user taps
+      }
+    }
+
+    function stopMusic(){
+      if(!bgMusic) return;
+      bgMusic.pause();
+      musicOn = false;
+      if(musicBtn) musicBtn.textContent = "🔊 Music: Off";
+    }
+
+    function toggleMusic(){
+      if(!musicOn) startMusic();
+      else stopMusic();
+    }
+
+    if(musicBtn) musicBtn.addEventListener("click", toggleMusic);
+
+    // Start on first interaction anywhere
+    const firstTap = () => {
+      startMusic();
+      window.removeEventListener("pointerdown", firstTap);
+      window.removeEventListener("touchstart", firstTap);
+      window.removeEventListener("keydown", firstTap);
+    };
+    window.addEventListener("pointerdown", firstTap, {passive:true});
+    window.addEventListener("touchstart", firstTap, {passive:true});
+    window.addEventListener("keydown", firstTap);
+
   </script>
 </body>
 </html>
